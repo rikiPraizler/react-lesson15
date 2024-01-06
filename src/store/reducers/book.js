@@ -5,7 +5,7 @@ const initialState = {
         { id: 200, name: "bbb", price: 222, src: "", author: "michal" },
         { id: 300, name: "ccc", price: 333, src: "", author: "efrat" },
         { id: 400, name: "ddd", price: 444, src: "", author: "sara" },
-        { id: 500, name: "eee", price: 555, src: "", author: "chana" },
+        { id: 500, name: "eee", price: 555, src: "", author: "chana" }
 
     ],
     selectedBook: null,
@@ -19,10 +19,11 @@ export const bookReducer = (state = initialState, action) => {
             // let copyArr =[...state.arr] ;
             // copyArr.push(action.payload);
             return {
-                selectedBook: state.selectedBook,
-                selectedBookForEdit: state.selectedBookForEdit,
-                arr: [...state.arr, action.payload],
-                openFormForAdd: null
+                ...state,
+                openFormForAdd: null,
+                openFormForAdd: null,
+                arr: [...state.arr, action.payload]
+                // openFormForAdd: null
             }
 
         //קיצור לכל הנל
@@ -34,14 +35,19 @@ export const bookReducer = (state = initialState, action) => {
             //     selectedBookForEdit: state.selectedBookForEdit,
             //     arr: state.arr
             // }
-            return { ...state, selectedBook: action.payload }
+            return {
+                ...state,
+                selectedBook: action.payload,
+                selectedBookForEdit: null,
+                openFormForAdd:null
+            }
 
         case "SELECT_BOOK_FOR_EDIT":
             return {
-                selectedBook: state.selectedBook,
+                selectedBook: null,
                 selectedBookForEdit: action.payload,
                 arr: state.arr,
-                openFormForAdd: state.openFormForAdd
+                openFormForAdd: null
 
             }
 
@@ -69,9 +75,9 @@ export const bookReducer = (state = initialState, action) => {
 
         case "OPEN_FORM_FOR_ADD":
             return {
-                selectedBook: state.selectedBook?.id != action.payload ? state.selectedBook : null,
-                selectedBookForEdit: state.selectedBookForEdit?.id != action.payload ? state.selectedBookForEdit : null,
-                arr: state.arr.filter(item => item.id != action.payload),
+                selectedBook: null,
+                selectedBookForEdit: null,
+                arr: state.arr,
                 openFormForAdd: true
 
             }
